@@ -1,0 +1,10 @@
+
+<suite name="Suite">
+    <test name="Test1">
+        <parameter name="browser" value="chrome"/>
+        
+        <classes>
+            <class name="base.BaseClass"/>
+        </classes>
+    </test>
+</suite>
