@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Default test(failed)">
+<suite name="Failed suite [Suite]">
+  <test thread-count="5" name="Test1(failed)">
+    <parameter name="browser" value="chrome"/>
     <classes>
       <class name="tests.EMI_Test">
         <methods>
           <include name="validateEMIUsingExcel"/>
           <include name="setup"/>
-          <include name="testPDFDownload"/>
           <include name="uiValidation"/>
+          <include name="testPDFDownload"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- tests.EMI_Test -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Test1(failed) -->
+</suite> <!-- Failed suite [Suite] -->

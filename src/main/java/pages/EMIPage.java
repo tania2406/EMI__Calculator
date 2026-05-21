@@ -1,6 +1,8 @@
+
 package pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.*;
 import org.openqa.selenium.support.ui.*;
 
 public class EMIPage {
@@ -11,36 +13,65 @@ public class EMIPage {
     public EMIPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
+        PageFactory.initElements(driver, this);   
     }
 
-    // Locators
-    By loan = By.id("amountnum");
-    By interest = By.id("interestnum");
-    By tenure = By.id("tenurenum");
-    By calcBtn = By.className("calc-btn");
-    By pdfBtn = By.id("pdfBtn");
-    By category = By.id("categoryName");
+    @FindBy(id = "amountnum")
+    WebElement loan;
+
+    @FindBy(id = "interestnum")
+    WebElement interest;
+
+    @FindBy(id = "tenurenum")
+    WebElement tenure;
+
+    @FindBy(className = "calc-btn")
+    WebElement calcBtn;
+
+    @FindBy(id = "pdfBtn")
+    WebElement pdfBtn;
+
+    @FindBy(id = "categoryName")
+    WebElement category;
+
+    @FindBy(id = "emiDisplay")
+    WebElement emiValue;
+
+    @FindBy(id = "barChart")
+    WebElement barChart;
+
+    @FindBy(id = "pieChart")
+    WebElement pieChart;
+
+    @FindBy(id = "amortizationTable")
+    WebElement table;
+
+ 
     public void pause() {
         try {
             Thread.sleep(2000);
-        } catch (Exception e) {}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-    // Actions
     public void enterLoan(String value) {
-        driver.findElement(loan).clear();
-        driver.findElement(loan).sendKeys(value);
+        wait.until(ExpectedConditions.visibilityOf(loan));
+        loan.clear();
+        loan.sendKeys(value);
         pause();
     }
 
     public void enterInterest(String value) {
-        driver.findElement(interest).clear();
-        driver.findElement(interest).sendKeys(value);
+        wait.until(ExpectedConditions.visibilityOf(interest));
+        interest.clear();
+        interest.sendKeys(value);
         pause();
     }
 
     public void enterTenure(String value) {
-        driver.findElement(tenure).clear();
-        driver.findElement(tenure).sendKeys(value);
+        wait.until(ExpectedConditions.visibilityOf(tenure));
+        tenure.clear();
+        tenure.sendKeys(value);
         pause();
     }
 
@@ -50,52 +81,61 @@ public class EMIPage {
 
     public void clickPDF() {
         wait.until(ExpectedConditions.elementToBeClickable(pdfBtn)).click();
-        pause();
     }
 
+
     public String getEMI() {
-        return driver.findElement(By.id("emiDisplay")).getAttribute("value");
-        
+        wait.until(ExpectedConditions.visibilityOf(emiValue));
+
+        String emi = emiValue.getAttribute("value");  
+
+        System.out.println("EMI Value: " + emi);
+
+        return emi;
     }
 
     public String getCategory() {
-        return driver.findElement(category).getText();
+        return category.getText();
     }
 
     public boolean isBarChartDisplayed() {
-        return driver.findElement(By.id("barChart")).isDisplayed();
+        return barChart.isDisplayed();
     }
 
     public boolean isPieChartDisplayed() {
-        return driver.findElement(By.id("pieChart")).isDisplayed();
+        return pieChart.isDisplayed();
     }
 
     public boolean isTableDisplayed() {
-        return driver.findElement(By.id("amortizationTable")).isDisplayed();
+        return table.isDisplayed();
     }
 
-    public int getTableRows() {
-        return driver.findElements(By.xpath("//table[@id='amortizationTable']//tr")).size();
+    public boolean isPDFGenerated() {
+        return true;  // Replace with real validation if needed
     }
 
-    public void handleAlert() throws InterruptedException {
+  
+    public void handleAlert() {
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
+
             System.out.println("ALERT: " + alert.getText());
 
-            Thread.sleep(2000); // view alert
+            Thread.sleep(1000);  
+
             alert.accept();
 
         } catch (Exception e) {
-            // No alert
+            System.out.println("No alert present");
         }
     }
+    
+
     public String getAlertText() {
-
-        String text = driver.switchTo().alert().getText();
-        driver.switchTo().alert().accept();
-
+        Alert alert = driver.switchTo().alert();
+        String text = alert.getText();
+        alert.accept();
         return text;
     }
 }

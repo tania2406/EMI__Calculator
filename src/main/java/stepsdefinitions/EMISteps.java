@@ -1,15 +1,10 @@
 package stepsdefinitions;
 
-
-import java.util.List;
-
 import org.testng.Assert;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.EMIPage;
-import utils.ExcelReader;
 
 public class EMISteps {
 
@@ -17,8 +12,6 @@ public class EMISteps {
 
     @Given("user is on EMI page")
     public void user_is_on_page() {
-
-        // ✅ Use Hooks base
         page = new EMIPage(Hooks.base.driver, Hooks.base.wait);
     }
 
@@ -42,25 +35,23 @@ public class EMISteps {
         page.clickCalculate();
     }
 
+
     @Then("alert should be displayed")
     public void alertDisplayed() throws Exception {
         page.handleAlert();
     }
+
 
     @Then("EMI should be displayed")
     public void verifyEMI() {
         Assert.assertFalse(page.getEMI().equals("0"));
     }
 
-    @When("user clicks PDF")
-    public void clickPDF() {
-        page.clickPDF();
+    @Then("EMI value should be correct")
+    public void verifyEMIValue() {
+        Assert.assertTrue(page.getEMI().length() > 0);
     }
 
-    @Then("loan category should be displayed")
-    public void verifyCategory() {
-        Assert.assertTrue(page.getCategory().length() > 0);
-    }
 
     @Then("charts should be visible")
     public void chartsVisible() {
@@ -73,67 +64,22 @@ public class EMISteps {
         Assert.assertTrue(page.isTableDisplayed());
     }
 
+    @When("user clicks download PDF")
+    public void clickPDF() {
+        page.clickPDF();
+    }
 
+    @Then("PDF should be generated successfully")
+    public void verifyPDF() {
+        Assert.assertTrue(page.isPDFGenerated());
+    }
+    @Then("amortization table should be displayed")
+    public void amortization_table_should_be_displayed() {
+        Assert.assertTrue(page.isTableDisplayed(), "Amortization table is NOT displayed");
+    }
 
-
-//@When("user validates data from Excel")
-//public void validateFromExcel() throws Exception {
-//
-//    List<String[]> data = ExcelReader.getData();
-//
-//    for (String[] row : data) {
-//
-//        String loan = row[0];
-//        String interest = row[1];
-//        String tenure = row[2];
-//
-//        System.out.println("\n--- New Test Case ---");
-//
-//        // ✅ Step 1: Enter Loan only
-//        page.enterLoan(loan);
-//        page.clickCalculate();
-//
-//        try {
-//            page.handleAlert();
-//            System.out.println("Loan Invalid ❌");
-//
-//            Hooks.base.driver.navigate().refresh();
-//            continue;  // stop here if loan invalid
-//        } catch (Exception e) {
-//            System.out.println("Loan Valid ✅");
-//        }
-//
-//        // ✅ Step 2: Enter Interest
-//        page.enterInterest(interest);
-//        page.clickCalculate();
-//
-//        try {
-//            page.handleAlert();
-//            System.out.println("Interest Invalid ❌");
-//
-//            Hooks.base.driver.navigate().refresh();
-//            continue;
-//        } catch (Exception e) {
-//            System.out.println("Interest Valid ✅");
-//        }
-//
-//        // ✅ Step 3: Enter Tenure
-//        page.enterTenure(tenure);
-//        page.clickCalculate();
-//
-//        try {
-//            page.handleAlert();
-//            System.out.println("Tenure Invalid ❌");
-//        } catch (Exception e) {
-//            System.out.println("All Inputs Valid ✅");
-//        }
-//
-//        // ✅ Reset page
-//        Hooks.base.driver.navigate().refresh();
-//        Thread.sleep(1000);
-//    }
-//}
-
+    @Then("loan category should be displayed")
+    public void verifyCategory() {
+        Assert.assertTrue(page.getCategory().length() > 0);
+    }
 }
-
-

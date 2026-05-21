@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="85.065" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-05-20T08:52:38.953063600Z">
+<testcase classname="EMI Functional Validation" name="Validate EMI calculation with valid data" time="11.722">
+<system-out><![CDATA[
+Given user is on EMI page...................................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "10.5".............................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then EMI should be displayed................................................passed
+And EMI value should be correct.............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="EMI Report and UI Validation" name="Validate report generation and UI elements" time="7.346">
+<system-out><![CDATA[
+Given user is on EMI page...................................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "10.5".............................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then charts should be visible...............................................passed
+And amortization table should be displayed..................................passed
+When user clicks download PDF...............................................passed
+Then PDF should be generated successfully...................................passed
+]]></system-out>
+</testcase>
+<testcase classname="EMI Report and UI Validation" name="Validate report generation with invalid data" time="6.683">
+<system-out><![CDATA[
+Given user is on EMI page...................................................passed
+When user enters loan "800".................................................passed
+And user enters interest "0.5"..............................................passed
+And user enters tenure "367"................................................passed
+And user clicks download PDF................................................passed
+Then PDF should be generated successfully...................................passed
+]]></system-out>
+</testcase>
+<testcase classname="EMI Input Validation" name="Validate invalid and boundary values for EMI fields" time="59.017">
+<system-out><![CDATA[
+Given user is on EMI page...................................................passed
+When user enters loan "9999"................................................passed
+And user enters interest "10"...............................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "100000001"...........................................passed
+And user enters interest "10"...............................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "0"................................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "26"...............................................passed
+And user enters tenure "60".................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "10"...............................................passed
+And user enters tenure "0"..................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "500000"..............................................passed
+And user enters interest "10"...............................................passed
+And user enters tenure "361"................................................passed
+And user clicks calculate...................................................passed
+Then alert should be displayed..............................................passed
+When user enters loan "10000"...............................................passed
+And user enters interest "1"................................................passed
+And user enters tenure "1"..................................................passed
+And user clicks calculate...................................................passed
+When user enters loan "10000000"............................................passed
+And user enters interest "25"...............................................passed
+And user enters tenure "360"................................................passed
+And user clicks calculate...................................................passed
+]]></system-out>
+</testcase>
+</testsuite>
