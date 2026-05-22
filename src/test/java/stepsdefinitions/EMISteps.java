@@ -32,6 +32,7 @@ public class EMISteps {
 
     @When("user clicks calculate")
     public void clickCalc() {
+
         page.clickCalculate();
     }
 

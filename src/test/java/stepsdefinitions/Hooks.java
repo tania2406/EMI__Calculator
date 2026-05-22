@@ -18,12 +18,12 @@ public class Hooks {
             base.setup();   // ✅ start only once
         }
     }
-
     @After
-    public void closeBrowser() {
-        // ❌ DON'T close every scenario
-        // leave empty for now
-    }
+public void closebrowser()
+{
+
+}
+
     @AfterAll
     public static void tearDown() {
         if (base != null) {
